@@ -26,4 +26,4 @@ true 나 false 값은 리액트에서 렌더링 하지 않기 때문이죠!
 렌더링 된 후 이전값을 사용하여 실행하는 경우가 있는데
 이런 경우 콜백함수를 사용해 해결
 setItems([...items, ...reviews]) => setItems((prevItems)=>[...prevItems, ...reviews])
-prevItems라는 파라미터를 받아서 렌더링
+prevItems라는 파라미터를 받아서 렌더링한다!
