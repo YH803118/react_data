@@ -23,6 +23,7 @@ function App() {
 
   const handleLoad = async (options) => {
     const { reviews, paging } = await getReivews(options);
+    console.log(paging);
     if (options.offset === 0) {
       setItems(reviews);
     } else {
