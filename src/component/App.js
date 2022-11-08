@@ -1,6 +1,6 @@
 import ReviewList from "./ReviewList";
 import { useEffect, useState } from "react";
-import { getReivews } from "./api";
+import { getReivews } from "../api";
 
 const LIMIT = 6;
 
@@ -8,6 +8,10 @@ function App() {
   const [items, setItems] = useState([]);
   const [order, setOrder] = useState("createdAt");
   const [offset, setOffset] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
+  const [loadingError, setLoadingError] = useState(null);
+  const [search, setSearch] = useState("");
+
   const [hasNext, setHasNext] = useState(false);
 
   const sortedItems = items.sort((a, b) => b[order] - a[order]);
@@ -21,8 +25,24 @@ function App() {
     setItems(nextItems);
   };
 
+  const handleSearch = (e) => {
+    e.preventDefault();
+    setSearch(e.target["search"].value);
+  };
+
   const handleLoad = async (options) => {
-    const { reviews, paging } = await getReivews(options);
+    let result;
+    try {
+      setIsLoading(true);
+      setLoadingError(null);
+      result = await getReivews(options);
+    } catch (error) {
+      setLoadingError(error);
+      return;
+    } finally {
+      setIsLoading(false);
+    }
+    const { reviews, paging } = result;
     console.log(paging);
     if (options.offset === 0) {
       setItems(reviews);
@@ -39,8 +59,8 @@ function App() {
   };
 
   useEffect(() => {
-    handleLoad({ order, offset: 0, limit: LIMIT });
-  }, [order]);
+    handleLoad({ order, offset: 0, limit: LIMIT, search });
+  }, [order, search]);
   // 무한뤂프가 발생했을 때 useEffect를 사용.
   // 뒤에 빈 배열을 넣어야하는데 아무것도 없는 초기화면을 의미함!
   // 즉 페이지 오픈 초기에만 발동되는 것이다.
@@ -52,9 +72,18 @@ function App() {
       <div>
         <button onClick={handleNewestClick}>최신순</button>
         <button onClick={handleBestClick}>별점순</button>
+        <form onSubmit={handleSearch}>
+          <input name="search" />
+          <button type="submit"> 검색 </button>
+        </form>
       </div>
       <ReviewList items={sortedItems} onDelete={handleDelete} />
-      {hasNext && <button onClick={handleLoadMore}>더 보기</button>}
+      {hasNext && (
+        <button disabled={isLoading} onClick={handleLoadMore}>
+          더 보기
+        </button>
+      )}
+      {loadingError?.message && <span>{loadingError.message}</span>}
     </div>
   );
 }

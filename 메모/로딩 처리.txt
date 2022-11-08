@@ -1,0 +1,24 @@
+입력을 처리하는 중 다른 입력을 와다다 누르면 불필요하게 중복된 요청을 보내게됨.
+화면에도 반복된 출력이 나오게 되는데
+
+네트워크 로딩 처리를 해줘야 함.
+
+로딩 상태를 반영할 state를 만들고
+
+네트워크 리퀘스트 전에 값을 true로 변경, 끝나면 false로
+(try-catch-finally문 이용)
+
+disabled prop을 추가해 로딩이 끝나지 않으면 disabled=true로 기능이 비활성화 되도록
+
+------------------------------------------------------------
+
+네트워크 에러 처리?
+
+?. 으로 프로퍼티를 불러온다? (옵셔널 체이닝)
+{loadingError?.message && <span>{loadingError.message}</span>}
+ - loadingError가 있을 때만 message 프로퍼티를 참조하게 됨.
+
+-------------------------------------------------------------
+
+<form onSubmit={handleSearchSubmit}>
+submit 이벤트는 form 태그 안에

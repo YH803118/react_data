@@ -27,3 +27,11 @@ true 나 false 값은 리액트에서 렌더링 하지 않기 때문이죠!
 이런 경우 콜백함수를 사용해 해결
 setItems([...items, ...reviews]) => setItems((prevItems)=>[...prevItems, ...reviews])
 prevItems라는 파라미터를 받아서 렌더링한다!
+
+커서 기반 페이지네이션?
+
+- 마지막으로 불러온 친구를 기준으로 함.
+- 마지막 좌표를 불러오기 위해
+  console.log(paging) 을 해보면 nextCursor 를 불러와야 하는데
+  const { paging: {nextCursor} } = await getFoods(options);
+  이런 식으로 가져 와야함.
