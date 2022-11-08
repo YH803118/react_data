@@ -1,6 +1,7 @@
 import ReviewList from "./ReviewList";
 import { useEffect, useState } from "react";
 import { getReivews } from "../api";
+import ReviewForm from "./ReviewForm";
 
 const LIMIT = 6;
 
@@ -10,7 +11,6 @@ function App() {
   const [offset, setOffset] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [loadingError, setLoadingError] = useState(null);
-  const [search, setSearch] = useState("");
 
   const [hasNext, setHasNext] = useState(false);
 
@@ -23,11 +23,6 @@ function App() {
   const handleDelete = (id) => {
     const nextItems = items.filter((item) => item.id !== id);
     setItems(nextItems);
-  };
-
-  const handleSearch = (e) => {
-    e.preventDefault();
-    setSearch(e.target["search"].value);
   };
 
   const handleLoad = async (options) => {
@@ -43,7 +38,6 @@ function App() {
       setIsLoading(false);
     }
     const { reviews, paging } = result;
-    console.log(paging);
     if (options.offset === 0) {
       setItems(reviews);
     } else {
@@ -55,12 +49,20 @@ function App() {
   };
 
   const handleLoadMore = () => {
-    handleLoad({ order, offset, limit: LIMIT });
+    handleLoad({
+      order,
+      offset,
+      limit: LIMIT,
+    });
   };
 
   useEffect(() => {
-    handleLoad({ order, offset: 0, limit: LIMIT, search });
-  }, [order, search]);
+    handleLoad({
+      order,
+      offset: 0,
+      limit: LIMIT,
+    });
+  }, [order]);
   // 무한뤂프가 발생했을 때 useEffect를 사용.
   // 뒤에 빈 배열을 넣어야하는데 아무것도 없는 초기화면을 의미함!
   // 즉 페이지 오픈 초기에만 발동되는 것이다.
@@ -72,11 +74,12 @@ function App() {
       <div>
         <button onClick={handleNewestClick}>최신순</button>
         <button onClick={handleBestClick}>별점순</button>
-        <form onSubmit={handleSearch}>
+        {/* <form onSubmit={handleSearch}>
           <input name="search" />
           <button type="submit"> 검색 </button>
-        </form>
+        </form> */}
       </div>
+      <ReviewForm></ReviewForm>
       <ReviewList items={sortedItems} onDelete={handleDelete} />
       {hasNext && (
         <button disabled={isLoading} onClick={handleLoadMore}>
