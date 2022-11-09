@@ -1,4 +1,5 @@
 import { useState } from "react";
+import FileInput from "./FileInput";
 
 // 제어 컴포넌트 방식
 function ReviewForm() {
@@ -6,15 +7,20 @@ function ReviewForm() {
     title: "",
     rating: 0,
     content: "",
+    imgFile: null,
   });
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
+  const handleChange = (name, value) => {
     setValues((preValues) => ({
       ...preValues,
       [name]: value,
       // 대괄호표기 : 프로퍼티명으로 지?정해줄 수 있음
     }));
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    handleChange(name, value);
   };
 
   const handleReivewSubmit = (e) => {
@@ -25,14 +31,24 @@ function ReviewForm() {
 
   return (
     <form className="ReviewForm" onSubmit={handleReivewSubmit}>
-      <input name="title" value={values.title} onChange={handleChange} />
+      <FileInput
+        name="imgFile"
+        value={values.imgFile}
+        onChange={handleChange}
+      />
+      <br></br>
+      <input name="title" value={values.title} onChange={handleInputChange} />
       <input
         name="rating"
         type="number"
         value={values.rating}
-        onChange={handleChange}
+        onChange={handleInputChange}
       />
-      <textarea name="content" value={values.content} onChange={handleChange} />
+      <textarea
+        name="content"
+        value={values.content}
+        onChange={handleInputChange}
+      />
       <button type="submit">전송</button>
     </form>
   );
