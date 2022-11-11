@@ -2,7 +2,7 @@ import ReviewList from "./ReviewList";
 import { useEffect, useState } from "react";
 import { getReivews } from "../api";
 import ReviewForm from "./ReviewForm";
-
+import "./App.css";
 const LIMIT = 6;
 
 function App() {
@@ -70,7 +70,7 @@ function App() {
   // 렌더링 할 때 디펜던시 리스트의 값을 확인해서 바뀐게 있으면 콜백함수를 실행.
 
   return (
-    <div>
+    <div className="app">
       <div>
         <button onClick={handleNewestClick}>최신순</button>
         <button onClick={handleBestClick}>별점순</button>

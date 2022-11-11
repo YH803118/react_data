@@ -1,7 +1,24 @@
+ul {
+  list-style-type: none;
+  padding-left: 0px;
+  width: 80%;
+  margin: auto;
+  /* text-align: center; */
+}
+
+li {
+  text-align: center;
+}
+
 .ReviewListItem {
   display: flex;
   padding: 10px;
   align-items: center;
+  /* width: 80%; */
+  background-color: rgb(234, 234, 234);
+  border-radius: 10px;
+  margin: 20px;
+  text-align: left;
 }
 
 .ReviewListItem-img {
@@ -9,4 +26,5 @@
   height: 300px;
   object-fit: cover;
   margin-right: 20px;
+  border-radius: 10px;
 }

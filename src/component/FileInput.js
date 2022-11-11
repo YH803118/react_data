@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import "./FileInput.css";
 
 function FileInput({ name, value, onChange }) {
   const [preview, setPreview] = useState();
@@ -46,7 +47,15 @@ function FileInput({ name, value, onChange }) {
 
   return (
     <div>
-      <img src={preview} alt="이미지 미리보기" />
+      {preview ? (
+        <img
+          className="ReviewListItem-img"
+          src={preview}
+          alt="이미지 미리보기"
+        />
+      ) : (
+        <img className="ReviewListItem-img" src="" />
+      )}
       <input
         type="file"
         accept="image/png, image/jpeg"
