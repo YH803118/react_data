@@ -4,6 +4,8 @@ import "./FileInput.css";
 function FileInput({ name, value, onChange }) {
   const [preview, setPreview] = useState();
   const inputRef = useRef();
+  //리액트에서 DOM 노드를 참조할 때 사용할 수 있는 Prop은 ref 이다.
+  //이때 Prop으로 전달하는 Ref 객체는 useRef 를 사용하면 만들 수 있다.
 
   const handleChange = (e) => {
     const nextValue = e.target.files[0];
@@ -54,7 +56,7 @@ function FileInput({ name, value, onChange }) {
           alt="이미지 미리보기"
         />
       ) : (
-        <img className="ReviewListItem-img" src="" />
+        <img alt="미리보기 이미지" className="ReviewListItem-img" src="" />
       )}
       <input
         type="file"

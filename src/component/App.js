@@ -1,6 +1,6 @@
 import ReviewList from "./ReviewList";
 import { useEffect, useState } from "react";
-import { getReivews } from "../api";
+import { getReviews } from "../api";
 import ReviewForm from "./ReviewForm";
 import "./App.css";
 const LIMIT = 6;
@@ -30,7 +30,7 @@ function App() {
     try {
       setIsLoading(true);
       setLoadingError(null);
-      result = await getReivews(options);
+      result = await getReviews(options);
     } catch (error) {
       setLoadingError(error);
       return;
