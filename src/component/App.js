@@ -56,6 +56,10 @@ function App() {
     });
   };
 
+  const handleSubmitSuccess = (review) => {
+    setItems((prevItems) => [review, ...prevItems]);
+  };
+
   useEffect(() => {
     handleLoad({
       order,
@@ -79,7 +83,7 @@ function App() {
           <button type="submit"> 검색 </button>
         </form> */}
       </div>
-      <ReviewForm></ReviewForm>
+      <ReviewForm onSubmitSuccess={handleSubmitSuccess}></ReviewForm>
       <ReviewList items={sortedItems} onDelete={handleDelete} />
       {hasNext && (
         <button disabled={isLoading} onClick={handleLoadMore}>
