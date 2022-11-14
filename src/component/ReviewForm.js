@@ -2,7 +2,7 @@ import { useState } from "react";
 import FileInput from "./FileInput";
 import RatingInput from "./RatingInput";
 import { createReviews } from "../api";
-
+import "./ReviewForm.css";
 const INITIAL_VALUES = {
   title: "",
   rating: 0,
