@@ -1,4 +1,10 @@
-.preview {
-  width: 300px;
-  height: 500px;
+.img-Upload {
+  width: 200px;
+  /* object-fit: cover; */
+  margin-right: 20px;
+  border-radius: 10px;
+}
+
+button {
+  margin-top: 5px;
 }

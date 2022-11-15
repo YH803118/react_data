@@ -11,10 +11,15 @@ const INITIAL_VALUES = {
 };
 
 // 제어 컴포넌트 방식
-function ReviewForm({ onSubmitSuccess }) {
+function ReviewForm({
+  initialValues = INITIAL_VALUES,
+  initialPreview,
+  onSubmitSuccess,
+  onCancel,
+}) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submittingError, setSubmittingError] = useState(null);
-  const [values, setValues] = useState(INITIAL_VALUES);
+  const [values, setValues] = useState(initialValues);
 
   const handleChange = (name, value) => {
     setValues((preValues) => ({
@@ -57,24 +62,34 @@ function ReviewForm({ onSubmitSuccess }) {
       <FileInput
         name="imgFile"
         value={values.imgFile}
+        initialPreview={initialPreview}
         onChange={handleChange}
       />
-      <br></br>
-      <input name="title" value={values.title} onChange={handleInputChange} />
-      <RatingInput
-        name="rating"
-        value={values.rating}
-        onChange={handleChange}
-      />
-      <textarea
-        name="content"
-        value={values.content}
-        onChange={handleInputChange}
-      />
-      <button type="submit" disabled={isSubmitting}>
-        전송
-      </button>
-      {submittingError?.message && <div>{submittingError.message}</div>}
+      <div className="inputReview">
+        제목 :&nbsp;
+        <input
+          className="inputTitle"
+          name="title"
+          value={values.title}
+          onChange={handleInputChange}
+        />
+        <RatingInput
+          name="rating"
+          value={values.rating}
+          onChange={handleChange}
+        />
+        <textarea
+          className="inputContent"
+          name="content"
+          value={values.content}
+          onChange={handleInputChange}
+        />
+        <button type="submit" disabled={isSubmitting}>
+          전송
+        </button>
+        {onCancel && <button onClick={onCancel}>취소</button>}
+        {submittingError?.message && <div>{submittingError.message}</div>}
+      </div>
     </form>
   );
 }

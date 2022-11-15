@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import "./FileInput.css";
 
-function FileInput({ name, value, onChange }) {
-  const [preview, setPreview] = useState();
+function FileInput({ name, value, initialPreview, onChange }) {
+  const [preview, setPreview] = useState(initialPreview);
   const inputRef = useRef();
   //리액트에서 DOM 노드를 참조할 때 사용할 수 있는 Prop은 ref 이다.
   //이때 Prop으로 전달하는 Ref 객체는 useRef 를 사용하면 만들 수 있다.
@@ -38,17 +38,17 @@ function FileInput({ name, value, onChange }) {
 
     return () => {
       console.log("ObjectURL 해제");
-      setPreview();
+      setPreview(initialPreview);
       URL.revokeObjectURL(nextPreview);
       // 앞에서 만든 ObjectURL을 해제
     }; // 정리 함수.
     // 디펜던스 리스트 값이 바뀌어서 새로 콜백을 실행해야 할때
     // 실행하기 전에 앞에서 리턴한 정리 함수를 먼저 실행.
-  }, [value]);
+  }, [value, initialPreview]);
   // value 값이 바뀔 때마다 => 파일을 선택할 때마다
 
   return (
-    <div>
+    <div className="img-Upload">
       {preview ? (
         <img
           className="ReviewListItem-img"
@@ -58,6 +58,7 @@ function FileInput({ name, value, onChange }) {
       ) : (
         <img alt="미리보기 이미지" className="ReviewListItem-img" src="" />
       )}
+      <br></br>
       <input
         type="file"
         accept="image/png, image/jpeg"
